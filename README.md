@@ -12,3 +12,6 @@
 ### Lecture 1
 - Typescript type
 - Create React App
+
+### Lecture 2
+- Javascript
