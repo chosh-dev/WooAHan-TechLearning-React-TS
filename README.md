@@ -15,3 +15,4 @@
 
 ### Lecture 2
 - Javascript
+- Redux 만들기

@@ -153,12 +153,12 @@ async function main() {
 //! 커링
 // 여러 개 인자 하나하나가 함수 하나씩 배분해 나누는 것
 // 클로저는 커링을 위한 기술 중 하나
-const foo = a => b => c => a+b+c;
+const foo = a => b => c => a + b + c;
 
-function foo(a){
-    return function(b){
-      return function(c){
-        return a + b + c;
-      }
+function foo(a) {
+    return function (b) {
+        return function (c) {
+            return a + b + c;
+        }
     }
-    }
+}
