@@ -16,3 +16,9 @@
 ### Lecture 2
 - Javascript
 - Redux 만들기
+
+
+### Lecture 3
+- React를 쓰는 이유
+- 간단한 React 만들기
+- React 상태관리
