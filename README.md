@@ -30,3 +30,6 @@
 
 ### Lecture 5
 - Middleware
+
+### Lecture 6
+- Webpack
