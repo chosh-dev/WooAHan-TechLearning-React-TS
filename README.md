@@ -33,3 +33,4 @@
 
 ### Lecture 6
 - Webpack
+- Redux, Redux-saga
