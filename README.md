@@ -34,3 +34,10 @@
 ### Lecture 6
 - Webpack
 - Redux, Redux-saga
+
+### Lecture 7
+- component 분할에 대해
+- interface vs type
+- generic
+- react-redux
+- axios
