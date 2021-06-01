@@ -45,8 +45,8 @@ export interface OrderStatusProps {
     showTimeLine: boolean;
     success: number;
     failure: number;
-    successTimeline: TimelineItem[];
-    failureTimeline: TimelineItem[];
+    successTimeline: ITimelineItem[];
+    failureTimeline: ITimelineItem[];
 }
 
 //! React component의 oop
@@ -113,4 +113,91 @@ export const CounterComponent = ({ value } => {
     )
 })
 
-//! axios
+//! axios를 사용한 API 통신
+//* API response에 대한 규격을 interface로 정의
+import axios, { AxiosResponse, AxiosError } from "axios"
+import endpoint from "./endpoint.config";
+
+// 성공
+interface IApiSuccessMessage {
+    status: string;
+}
+
+// 에러
+interface IApiError {
+    status: string;
+    statusCode: number;
+    errorMessage: string;
+}
+
+export class ApiError implements IApiError {
+    status: string = "";
+    statusCode: number = 0;
+    errorMessage: string = "";
+
+    constructor(err: AxiosError) {
+        this.status = err.response.data.status;
+        this.statusCode = err.response.status;
+        this.errorMessage = err.reponse.data.errorMessage;
+    }
+}
+
+interface INumberOfSuccessfulOrderResponse extends IApiSuccessMessage {
+    result: {
+        success: number;
+    };
+}
+
+interface IOrderTimelineResponse extends IApiSuccessMessage {
+    results: {
+        successTimeline: [];
+        failureTimeline: [];
+    };
+}
+
+//* 실제로 사용하기에는 불편함으로 promise 형태로 작성
+export function fetchNumberOfSuccessfulOrder(): Promise<INumberOfSuccessfulOrderResponse> {
+    return new Promise((resolve, reject) => {
+        // axios 랩핑
+        axios
+            .get(endpoint.orders.request.success({ error: true }))
+            .then((resp: AxiosResponse) => resolve(resp.data))
+            .catch((err: AxiosError) => reject(new ApiError(err)))
+    })
+}
+
+export function fetchOrderTimeline(
+    date: string
+): Promise<IOrderTimelineResponse> {
+    return new Promise((resolve, reject) => {
+        axios
+            .get(endpoint.orders.request.timeline(date))
+            .then((resp: AxiosResponse) => resolve(resp.data))
+            .catch((err: AxiosError) => reject(new ApiError(err)));
+    });
+}
+
+//* config 부분 (이해못하고 넘어감..)
+//* api가 많아져, 실제로 axios get해서 endopoint 빌드
+//* 반복적으로 처리하지 않기 위해서
+interface Config {
+    orders: {
+        request: {
+            success(options: { error?: boolean }): string
+            failure(): string
+            timeline(data: string): string
+        }
+    }
+}
+
+//process.env.production 분기
+const config: Config = {
+    orders: {
+        request: ({ error = false }) =>
+            `${SERVER}/${API_PREFIX}/orders/request/success${error ? "?error = random" : ""}`,
+        failure: () => `${SERVER}/${API_PREFIX}/orders/request/failure`,
+        timeline: date => `${SERVER}/${API_PREFIX}/orders/request/all/${date}`
+    }
+}
+
+export default config;
