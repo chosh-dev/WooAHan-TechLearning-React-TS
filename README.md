@@ -36,8 +36,13 @@
 - Redux, Redux-saga
 
 ### Lecture 7
-- component 분할에 대해
-- interface vs type
-- generic
-- react-redux
-- axios
+- Component 분할에 대해
+- Interface vs Type
+- Generic
+- React-redux
+- Axios
+
+### Lecture 8
+- React-router
+- Component 아키텍쳐
+- Mobx
