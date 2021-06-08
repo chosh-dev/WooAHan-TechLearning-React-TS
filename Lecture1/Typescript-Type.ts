@@ -32,6 +32,6 @@ const person2: Person2 ={
 //* -> 일반적으로는 interface 사용, union,tuple 등이 필요할 때 type alias 사용
 //* -> public api는 interface 사용, private api는 type alias 사용
 
-//* 2. interface는 extend/implement 될 수 없다.
-//* -> extend/implement 시에는 type alias 사용
+//* 2. type은 extend/implement 될 수 없다.
+//* -> extend/implement 시에는 interface 사용
 
